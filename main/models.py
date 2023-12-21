@@ -1,0 +1,42 @@
+from django.db import models
+
+# Create your models here.
+
+
+class Teacher(models.Model):
+    full_name = models.CharField(max_length = 50)
+    email = models.CharField(max_length = 50)
+    password = models.CharField(max_length = 50)
+    phone_no = models.IntegerField()
+    qualification = models.CharField(max_length = 50)
+    address = models.TextField(max_length = 250)
+
+    class Meta:
+        verbose_name_plural = '1. Teachers'
+
+class CourseCategory(models.Model):
+    title = models.CharField(max_length = 50)
+    description = models.TextField(max_length = 250)
+
+    class Meta:
+        verbose_name_plural = '2. Course Categories'
+
+class Course(models.Model):
+    course_category = models.ForeignKey(CourseCategory, on_delete=models.CASCADE)
+    teachers_category = models.ForeignKey(Teacher, on_delete=models.CASCADE)
+    title = models.CharField(max_length=50)
+    descripton = models.TextField(max_length=50)
+
+    class Meta:
+        verbose_name_plural = '3. Courses'
+class Student(models.Model):
+    full_name = models.CharField(max_length = 50)
+    email = models.CharField(max_length = 50)
+    password = models.CharField(max_length = 50)
+    phone_no = models.IntegerField()
+    qualification = models.CharField(max_length = 50)
+    address = models.TextField(max_length = 250)
+    interested_categories = models.TextField(max_length = 250)
+
+    class Meta:
+        verbose_name_plural = '4. Students'
