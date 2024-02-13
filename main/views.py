@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from . import models
 from rest_framework import permissions
 from .serializers import TeacherSerializer 
+from .serializers import CategorySerializer 
 from rest_framework import generics
 from django.http import JsonResponse,HttpResponse
 from django.views.decorators.csrf import csrf_exempt
@@ -28,3 +29,7 @@ def teacher_login(request):
         return JsonResponse({"bool":True})  
     else:
         return JsonResponse({"bool":False})
+    
+class CategoryList(generics.ListCreateAPIView):
+    queryset = models.CourseCategory.objects.all()
+    serializer_class = CategorySerializer
