@@ -8,4 +8,11 @@ urlpatterns = [
     
     # category
     path('category/',views.CategoryList.as_view()),
+    
+    # course
+    path('course/',views.CourseList.as_view()),
+    
+    # teacher course list
+    
+    path('teacher-courses/<int:teacher_id>/',views.TeacherCourseList.as_view())
 ]

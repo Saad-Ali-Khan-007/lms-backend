@@ -5,6 +5,7 @@ from . import models
 from rest_framework import permissions
 from .serializers import TeacherSerializer 
 from .serializers import CategorySerializer 
+from .serializers import CourseSerializer 
 from rest_framework import generics
 from django.http import JsonResponse,HttpResponse
 from django.views.decorators.csrf import csrf_exempt
@@ -33,3 +34,16 @@ def teacher_login(request):
 class CategoryList(generics.ListCreateAPIView):
     queryset = models.CourseCategory.objects.all()
     serializer_class = CategorySerializer
+    
+    
+class CourseList(generics.ListCreateAPIView):
+    queryset = models.Course.objects.all()
+    serializer_class = CourseSerializer
+    
+class TeacherCourseList(generics.ListAPIView):
+    serializer_class = CourseSerializer
+    
+    def get_queryset(self):
+        teacher_id = self.kwargs['teacher_id']
+        teacher = models.Teacher.objects.get(pk=teacher_id)
+        return models.Course.objects.filter(teachers_category=teacher)

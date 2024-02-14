@@ -32,7 +32,7 @@ class Course(models.Model):
     course_category = models.ForeignKey(CourseCategory, on_delete=models.CASCADE)
     teachers_category = models.ForeignKey(Teacher, on_delete=models.CASCADE)
     title = models.CharField(max_length=50)
-    descripton = models.TextField(null=True)
+    description = models.TextField(null=True)
     featured_img = models.ImageField(upload_to='course_imgs/',null=True)
     techs = models.TextField(null=True)
 

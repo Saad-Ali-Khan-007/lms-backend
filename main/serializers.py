@@ -10,3 +10,9 @@ class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = models.CourseCategory
         fields = '__all__'
+        
+        
+class CourseSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Course
+        fields = '__all__'
