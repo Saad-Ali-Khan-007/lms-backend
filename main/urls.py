@@ -11,6 +11,9 @@ urlpatterns = [
     
     # course
     path('course/',views.CourseList.as_view()),
+
+    # chapter
+    path('chapter/',views.ChapterList.as_view()),
     
     # teacher course list
     

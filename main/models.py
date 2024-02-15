@@ -38,6 +38,22 @@ class Course(models.Model):
 
     class Meta:
         verbose_name_plural = '3. Courses'
+
+    def __str__(self):
+        return self.title
+    
+    
+class Chapter(models.Model):
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    title = models.CharField(max_length=50)
+    description = models.TextField(null=True)
+    video = models.FileField(upload_to='chapter_videos/',null=True)
+    remarks = models.TextField(null=True)
+
+    class Meta:
+        verbose_name_plural = '4. Chapter'
+    
+
 class Student(models.Model):
     full_name = models.CharField(max_length = 50)
     email = models.CharField(max_length = 50)
@@ -48,4 +64,4 @@ class Student(models.Model):
     interested_categories = models.TextField(max_length = 250)
 
     class Meta:
-        verbose_name_plural = '4. Students'
+        verbose_name_plural = '5. Students'
