@@ -22,5 +22,7 @@ urlpatterns = [
     
     # teacher course list
     
-    path('teacher-courses/<int:teacher_id>/',views.TeacherCourseList.as_view())
+    path('teacher-courses/<int:teacher_id>/',views.TeacherCourseList.as_view()),
+
+    path('teacher-course-detail/<int:pk>',views.TeacherCourseDetail.as_view())
 ]

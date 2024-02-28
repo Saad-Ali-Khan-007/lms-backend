@@ -44,13 +44,19 @@ class CourseList(generics.ListCreateAPIView):
     queryset = models.Course.objects.all()
     serializer_class = CourseSerializer
     
-class TeacherCourseList(generics.ListAPIView):
+class TeacherCourseList(generics.ListCreateAPIView):
     serializer_class = CourseSerializer
     
     def get_queryset(self):
         teacher_id = self.kwargs['teacher_id']
         teacher = models.Teacher.objects.get(pk=teacher_id)
         return models.Course.objects.filter(teachers_category=teacher)
+    
+class TeacherCourseDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = models.Course.objects.all()
+    serializer_class = CourseSerializer
+    
+   
     
 class ChapterList(generics.ListCreateAPIView):
     queryset = models.Chapter.objects.all()
