@@ -5,7 +5,7 @@ from django.db import models
 
 class Teacher(models.Model):
     full_name = models.CharField(max_length = 50)
-    email = models.CharField(max_length = 50)
+    email = models.CharField(max_length = 50,unique=True)
     password = models.CharField(max_length = 50)
     phone_no = models.CharField(max_length = 50)
     qualification = models.CharField(max_length = 50)
@@ -44,7 +44,7 @@ class Course(models.Model):
     
     
 class Chapter(models.Model):
-    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE,related_name="course_chapters")
     title = models.CharField(max_length=50)
     description = models.TextField(null=True)
     video = models.FileField(upload_to='chapter_videos/',null=True)
