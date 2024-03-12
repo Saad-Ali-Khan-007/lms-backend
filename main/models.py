@@ -42,6 +42,10 @@ class Course(models.Model):
         related_courses = Course.objects.filter(techs=self.techs)
         return serializers.serialize('json',related_courses)
     
+    def tech_list(self):
+        tech_list = self.techs.split(',')
+        return tech_list
+    
     class Meta:
         verbose_name_plural = '3. Courses'
 

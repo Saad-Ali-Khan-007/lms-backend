@@ -16,13 +16,13 @@ class CategorySerializer(serializers.ModelSerializer):
 class ViewCourseSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Course
-        fields = ["id","course_category","teachers_category","title","description","featured_img","techs","course_chapters","related_courses"]
+        fields = ["id","course_category","teachers_category","title","description","featured_img","techs","course_chapters","related_courses","tech_list"]
         depth = 1
 
 class CourseSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Course
-        fields = ["id","course_category","teachers_category","title","description","featured_img","techs","course_chapters"]
+        fields = ["id","course_category","teachers_category","title","description","featured_img","techs"]
    
 
 

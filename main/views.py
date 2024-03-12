@@ -43,18 +43,23 @@ class CategoryList(generics.ListCreateAPIView):
 class ViewCourseList(generics.ListAPIView):
     queryset = models.Course.objects.all()
     serializer_class = ViewCourseSerializer   
-    
-class CourseList(generics.ListCreateAPIView):
-    queryset = models.Course.objects.all()
-    serializer_class = CourseSerializer
 
     def get_queryset(self):
         qs = super().get_queryset()
         if "result" in self.request.GET:
             limit = int(self.request.GET["result"])
             qs = models.Course.objects.all().order_by('-id')[:limit]
+
+        if "category" in self.request.GET:
+            category = self.request.GET['category']
+            qs = models.Course.objects.filter(techs__icontains=category)
         return qs
     
+class CourseList(generics.ListCreateAPIView):
+    queryset = models.Course.objects.all()
+    serializer_class = CourseSerializer
+
+
 class CourseDetail(generics.RetrieveAPIView):
     queryset = models.Course.objects.all()
     serializer_class = ViewCourseSerializer
