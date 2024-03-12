@@ -1,10 +1,11 @@
 from django.db import models
-
+from django.core import serializers
 # Create your models here.
 
 
 class Teacher(models.Model):
     full_name = models.CharField(max_length = 50)
+    description = models.TextField(null=True)
     email = models.CharField(max_length = 50,unique=True)
     password = models.CharField(max_length = 50)
     phone_no = models.CharField(max_length = 50)
@@ -30,12 +31,17 @@ class CourseCategory(models.Model):
 
 class Course(models.Model):
     course_category = models.ForeignKey(CourseCategory, on_delete=models.CASCADE)
-    teachers_category = models.ForeignKey(Teacher, on_delete=models.CASCADE)
+    teachers_category = models.ForeignKey(Teacher, on_delete=models.CASCADE,related_name="teacher_courses")
     title = models.CharField(max_length=50)
     description = models.TextField(null=True)
     featured_img = models.ImageField(upload_to='course_imgs/',null=True)
     techs = models.TextField(null=True)
 
+
+    def related_courses(self):
+        related_courses = Course.objects.filter(techs=self.techs)
+        return serializers.serialize('json',related_courses)
+    
     class Meta:
         verbose_name_plural = '3. Courses'
 

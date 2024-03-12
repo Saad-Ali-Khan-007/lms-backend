@@ -4,19 +4,26 @@ from . import models
 class TeacherSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Teacher
-        fields = '__all__'
-        
+        fields = ["id","full_name","description","email","password","phone_no","qualification","skills","teacher_courses"]
+        depth = 1
+
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = models.CourseCategory
         fields = '__all__'
         
         
+class ViewCourseSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Course
+        fields = ["id","course_category","teachers_category","title","description","featured_img","techs","course_chapters","related_courses"]
+        depth = 1
+
 class CourseSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Course
         fields = ["id","course_category","teachers_category","title","description","featured_img","techs","course_chapters"]
-        depth = 1
+   
 
 
 class ChapterSerializer(serializers.ModelSerializer):

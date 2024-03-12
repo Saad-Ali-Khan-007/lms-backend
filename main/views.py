@@ -5,6 +5,7 @@ from . import models
 from rest_framework import permissions
 from .serializers import TeacherSerializer 
 from .serializers import CategorySerializer 
+from .serializers import ViewCourseSerializer 
 from .serializers import CourseSerializer 
 from .serializers import ChapterSerializer 
 from rest_framework import generics
@@ -38,7 +39,10 @@ def teacher_login(request):
 class CategoryList(generics.ListCreateAPIView):
     queryset = models.CourseCategory.objects.all()
     serializer_class = CategorySerializer
-    
+
+class ViewCourseList(generics.ListAPIView):
+    queryset = models.Course.objects.all()
+    serializer_class = ViewCourseSerializer   
     
 class CourseList(generics.ListCreateAPIView):
     queryset = models.Course.objects.all()
@@ -53,7 +57,7 @@ class CourseList(generics.ListCreateAPIView):
     
 class CourseDetail(generics.RetrieveAPIView):
     queryset = models.Course.objects.all()
-    serializer_class = CourseSerializer
+    serializer_class = ViewCourseSerializer
     
 class TeacherCourseList(generics.ListCreateAPIView):
     serializer_class = CourseSerializer
