@@ -11,6 +11,7 @@ from .serializers import ChapterSerializer
 from rest_framework import generics
 from django.http import JsonResponse,HttpResponse
 from django.views.decorators.csrf import csrf_exempt
+from django.utils.datastructures import MultiValueDictKeyError
 # Create your views here.
 
 class TeacherList(generics.ListCreateAPIView):
@@ -44,7 +45,7 @@ class ViewCourseList(generics.ListAPIView):
     queryset = models.Course.objects.all()
     serializer_class = ViewCourseSerializer   
 
-    def get_queryset(self):
+    def get_queryset(self,*args,**kwargs):
         qs = super().get_queryset()
         if "result" in self.request.GET:
             limit = int(self.request.GET["result"])
@@ -53,6 +54,12 @@ class ViewCourseList(generics.ListAPIView):
         if "category" in self.request.GET:
             category = self.request.GET['category']
             qs = models.Course.objects.filter(techs__icontains=category)
+
+        if "skill_name" and "teacher_id" in self.request.GET:
+            skill_name= self.request.GET['skill_name']
+            teacher_id= self.request.GET['teacher_id']
+            teacher = models.Teacher.objects.filter(id=teacher_id).first()
+            qs = models.Course.objects.filter(techs__icontains=skill_name,teachers_category=teacher)
         return qs
     
 class CourseList(generics.ListCreateAPIView):
