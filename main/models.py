@@ -67,6 +67,9 @@ class Chapter(models.Model):
     class Meta:
         verbose_name_plural = '4. Chapter'
     
+    def __str__(self):
+        return self.title
+    
 
 class Student(models.Model):
     full_name = models.CharField(max_length = 50)
@@ -79,3 +82,15 @@ class Student(models.Model):
 
     class Meta:
         verbose_name_plural = '5. Students'
+
+    def __str__(self):
+        return self.full_name
+
+class StudentEnrollment(models.Model):
+    course = models.ForeignKey(Course,on_delete=models.CASCADE,related_name="enrolled_course")
+    student = models.ForeignKey(Student,on_delete=models.CASCADE,related_name="enrolled_student")
+    enrolled_time = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name_plural = '6. Enrolled Courses'
+   
