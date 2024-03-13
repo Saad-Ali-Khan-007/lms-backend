@@ -29,5 +29,13 @@ urlpatterns = [
     
     path('teacher-courses/<int:teacher_id>/',views.TeacherCourseList.as_view()),
 
-    path('teacher-course-detail/<int:pk>',views.TeacherCourseDetail.as_view())
+    path('teacher-course-detail/<int:pk>',views.TeacherCourseDetail.as_view()),
+
+
+    # Student
+
+    path('users/',views.UserList.as_view()),
+
+    path('user/login/',views.user_login),
+
 ]

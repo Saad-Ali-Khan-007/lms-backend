@@ -8,6 +8,7 @@ from .serializers import CategorySerializer
 from .serializers import ViewCourseSerializer 
 from .serializers import CourseSerializer 
 from .serializers import ChapterSerializer 
+from .serializers import UserSerializer 
 from rest_framework import generics
 from django.http import JsonResponse,HttpResponse
 from django.views.decorators.csrf import csrf_exempt
@@ -24,6 +25,7 @@ class TeacherDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = models.Teacher.objects.all()
     serializer_class = TeacherSerializer
     # permission_classes = [permissions.IsAuthenticated]
+
 @csrf_exempt
 def teacher_login(request):
     email = request.POST['email']
@@ -103,3 +105,22 @@ class ChapterDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = models.Chapter.objects.all()
     serializer_class = ChapterSerializer
 
+
+
+
+class UserList(generics.ListCreateAPIView):
+    queryset = models.Student.objects.all()
+    serializer_class = UserSerializer
+
+@csrf_exempt
+def user_login(request):
+    email = request.POST['email']
+    password = request.POST['password']
+    try:
+        userData = models.Student.objects.get(email=email,password=password)
+    except models.Student.DoesNotExist:
+        userData =None
+    if userData:
+        return JsonResponse({"bool":True,'user_id':userData.id})  
+    else:
+        return JsonResponse({"bool":False})

@@ -8,7 +8,7 @@ class Teacher(models.Model):
     description = models.TextField(null=True)
     email = models.CharField(max_length = 50,unique=True)
     password = models.CharField(max_length = 50)
-    phone_no = models.CharField(max_length = 50)
+    phone_no = models.CharField(max_length = 11)
     qualification = models.CharField(max_length = 50)
     skills = models.TextField(max_length = 250)
 
@@ -72,7 +72,7 @@ class Student(models.Model):
     full_name = models.CharField(max_length = 50)
     email = models.CharField(max_length = 50)
     password = models.CharField(max_length = 50)
-    phone_no = models.IntegerField()
+    phone_no = models.CharField(max_length=11)
     qualification = models.CharField(max_length = 50)
     address = models.TextField(max_length = 250)
     interested_categories = models.TextField(max_length = 250)
