@@ -1,8 +1,5 @@
 from django.shortcuts import render
-from rest_framework.views import APIView
-from rest_framework.response import Response
 from . import models
-from rest_framework import permissions
 from .serializers import TeacherSerializer 
 from .serializers import CategorySerializer 
 from .serializers import ViewCourseSerializer 
@@ -10,10 +7,11 @@ from .serializers import CourseSerializer
 from .serializers import ChapterSerializer 
 from .serializers import UserSerializer 
 from .serializers import StudentEnrollmentSerializer 
+from .serializers import ViewStudentEnrollmentSerializer 
 from rest_framework import generics
-from django.http import JsonResponse,HttpResponse
+from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from django.utils.datastructures import MultiValueDictKeyError
+
 
 
 class TeacherList(generics.ListCreateAPIView):
@@ -130,6 +128,10 @@ class StudentEnrollmentList(generics.ListCreateAPIView):
     queryset = models.StudentEnrollment.objects.all()
     serializer_class = StudentEnrollmentSerializer
 
+class ViewStudentEnrollmentList(generics.ListAPIView):
+    queryset = models.StudentEnrollment.objects.all()
+    serializer_class = ViewStudentEnrollmentSerializer
+
 
 def studentEnrollmentStatus(request,student_id,course_id):
     student = models.Student.objects.filter(id=student_id).first()
@@ -141,9 +143,9 @@ def studentEnrollmentStatus(request,student_id,course_id):
         return JsonResponse({"bool":False})
     
 
-class SpecificCourseEnrollrdStudent(generics.ListAPIView):
+class SpecificCourseEnrolledStudent(generics.ListAPIView):
     queryset = models.StudentEnrollment.objects.all()
-    serializer_class = StudentEnrollmentSerializer
+    serializer_class = ViewStudentEnrollmentSerializer
 
     def get_queryset(self):
         course_id = self.kwargs['course_id']
