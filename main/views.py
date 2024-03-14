@@ -9,11 +9,12 @@ from .serializers import ViewCourseSerializer
 from .serializers import CourseSerializer 
 from .serializers import ChapterSerializer 
 from .serializers import UserSerializer 
+from .serializers import StudentEnrollmentSerializer 
 from rest_framework import generics
 from django.http import JsonResponse,HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.datastructures import MultiValueDictKeyError
-# Create your views here.
+
 
 class TeacherList(generics.ListCreateAPIView):
     queryset = models.Teacher.objects.all()
@@ -122,5 +123,19 @@ def user_login(request):
         userData =None
     if userData:
         return JsonResponse({"bool":True,'user_id':userData.id})  
+    else:
+        return JsonResponse({"bool":False})
+    
+class StudentEnrollmentList(generics.ListCreateAPIView):
+    queryset = models.StudentEnrollment.objects.all()
+    serializer_class = StudentEnrollmentSerializer
+
+
+def studentEnrollmentStatus(request,student_id,course_id):
+    student = models.Student.objects.filter(id=student_id).first()
+    course = models.Course.objects.filter(id=course_id).first()
+    enrollStatus = models.StudentEnrollment.objects.filter(student=student,course=course)
+    if enrollStatus:
+        return JsonResponse({"bool":True})
     else:
         return JsonResponse({"bool":False})

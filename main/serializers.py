@@ -36,3 +36,9 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Student
         fields = '__all__'
+
+
+class StudentEnrollmentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.StudentEnrollment
+        fields = "__all__"

@@ -38,4 +38,13 @@ urlpatterns = [
 
     path('user/login/',views.user_login),
 
+
+    # Student enroll in course
+
+    path('enroll-course/',views.StudentEnrollmentList.as_view()),
+
+    # Student enroll Status
+
+    path('enroll-status/<int:student_id>/<int:course_id>/',views.studentEnrollmentStatus),
+
 ]

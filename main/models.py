@@ -94,3 +94,7 @@ class StudentEnrollment(models.Model):
     class Meta:
         verbose_name_plural = '6. Enrolled Courses'
    
+
+    def __str__(self):
+       return f"{self.course}-{self.student}"
+   
