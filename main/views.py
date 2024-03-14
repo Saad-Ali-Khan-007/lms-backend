@@ -75,7 +75,7 @@ class CourseDetail(generics.RetrieveAPIView):
     serializer_class = ViewCourseSerializer
     
 class TeacherCourseList(generics.ListCreateAPIView):
-    serializer_class = CourseSerializer
+    serializer_class = ViewCourseSerializer
     
     def get_queryset(self):
         teacher_id = self.kwargs['teacher_id']
@@ -139,3 +139,13 @@ def studentEnrollmentStatus(request,student_id,course_id):
         return JsonResponse({"bool":True})
     else:
         return JsonResponse({"bool":False})
+    
+
+class SpecificCourseEnrollrdStudent(generics.ListAPIView):
+    queryset = models.StudentEnrollment.objects.all()
+    serializer_class = StudentEnrollmentSerializer
+
+    def get_queryset(self):
+        course_id = self.kwargs['course_id']
+        course = models.Course.objects.get(pk=course_id)
+        return models.StudentEnrollment.objects.filter(course=course)

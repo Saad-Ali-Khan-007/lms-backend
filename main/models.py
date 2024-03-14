@@ -50,6 +50,10 @@ class Course(models.Model):
         tech_list = self.techs.split(',')
         return tech_list
     
+    def total_enrolled_students(self):
+        total_enrolled_students = StudentEnrollment.objects.filter(course=self).count()
+        return total_enrolled_students
+    
     class Meta:
         verbose_name_plural = '3. Courses'
 
