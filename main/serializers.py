@@ -48,3 +48,16 @@ class ViewStudentEnrollmentSerializer(serializers.ModelSerializer):
         model = models.StudentEnrollment
         fields = "__all__"
         depth=1
+
+
+class CourseRatingAndReview(serializers.ModelSerializer):
+    class Meta:
+        model = models.Rating_Review
+        fields = "__all__"
+     
+
+class ViewCourseRatingAndReview(serializers.ModelSerializer):
+    class Meta:
+        model = models.Rating_Review
+        fields = "__all__"
+        depth=1

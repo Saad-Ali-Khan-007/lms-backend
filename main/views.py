@@ -8,6 +8,8 @@ from .serializers import ChapterSerializer
 from .serializers import UserSerializer 
 from .serializers import StudentEnrollmentSerializer 
 from .serializers import ViewStudentEnrollmentSerializer 
+from .serializers import CourseRatingAndReview
+from .serializers import ViewCourseRatingAndReview
 from rest_framework import generics
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
@@ -151,3 +153,13 @@ class SpecificCourseEnrolledStudent(generics.ListAPIView):
         course_id = self.kwargs['course_id']
         course = models.Course.objects.get(pk=course_id)
         return models.StudentEnrollment.objects.filter(course=course)
+    
+
+
+class CourseRatingAndReview(generics.ListCreateAPIView):
+    serializer_class = ViewCourseRatingAndReview
+
+    def get_queryset(self):
+        course_id = self.kwargs["course_id"]
+        course = models.Course.objects.get(pk=course_id)
+        return models.Rating_Review.objects.filter(course=course)
