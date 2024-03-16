@@ -16,7 +16,7 @@ class CategorySerializer(serializers.ModelSerializer):
 class ViewCourseSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Course
-        fields = ["id","course_category","teachers_category","title","description","featured_img","techs","course_chapters","related_courses","tech_list","total_enrolled_students"]
+        fields = ["id","course_category","teachers_category","title","description","featured_img","techs","course_chapters","related_courses","tech_list","total_enrolled_students","average_course_rating"]
         depth = 1
 
 class CourseSerializer(serializers.ModelSerializer):
@@ -50,14 +50,16 @@ class ViewStudentEnrollmentSerializer(serializers.ModelSerializer):
         depth=1
 
 
-class CourseRatingAndReview(serializers.ModelSerializer):
+class CourseRatingAndReviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Rating_Review
         fields = "__all__"
+
+    def __init__(self,*args,**kwargs):
+        super(CourseRatingAndReviewSerializer,self).__init__(*args,**kwargs)
+        request = self.context.get('request')
+        self.Meta.depth = 0
+        if request and request.method == 'GET':
+            self.Meta.depth = 1
      
 
-class ViewCourseRatingAndReview(serializers.ModelSerializer):
-    class Meta:
-        model = models.Rating_Review
-        fields = "__all__"
-        depth=1

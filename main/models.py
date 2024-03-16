@@ -43,7 +43,7 @@ class Course(models.Model):
 
 
     def related_courses(self):
-        related_courses = Course.objects.filter(techs=self.techs)
+        related_courses = Course.objects.filter(techs=self.techs).exclude(id=self.id)
         return serializers.serialize('json',related_courses)
     
     def tech_list(self):
@@ -53,6 +53,10 @@ class Course(models.Model):
     def total_enrolled_students(self):
         total_enrolled_students = StudentEnrollment.objects.filter(course=self).count()
         return total_enrolled_students
+    
+    def average_course_rating(self):
+        average_course_rating = Rating_Review.objects.filter(course=self).aggregate(avg_rating=models.Avg('rating'))
+        return average_course_rating["avg_rating"]
     
     class Meta:
         verbose_name_plural = '3. Courses'
