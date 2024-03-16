@@ -55,6 +55,10 @@ urlpatterns = [
     path('student-enrolled-course/<int:course_id>/',views.SpecificCourseEnrolledStudent.as_view()),
 
 
+
+    path('teacher-all-student/<int:teacher_id>/',views.SpecificCourseEnrolledStudent.as_view()),
+
+
     # course rating and review
 
     path('course-rating-review/<int:course_id>',views.CourseRatingAndReview.as_view()),
