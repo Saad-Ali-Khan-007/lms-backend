@@ -7,7 +7,7 @@ class Teacher(models.Model):
     full_name = models.CharField(max_length = 50)
     description = models.TextField(null=True)
     email = models.CharField(max_length = 50,unique=True)
-    password = models.CharField(max_length = 50)
+    password = models.CharField(max_length = 50,blank=True,null=True)
     profile_img = models.ImageField(upload_to='teacher_profile_imgs/',null=True)
     phone_no = models.CharField(max_length = 11)
     qualification = models.CharField(max_length = 50)
