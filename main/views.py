@@ -174,6 +174,10 @@ class SpecificCourseEnrolledStudent(generics.ListAPIView):
             return models.StudentEnrollment.objects.filter(
                 course__teachers_category=teacher
             ).distinct()
+        elif "student_id" in self.kwargs:
+            student_id = self.kwargs["student_id"]
+            student = models.Student.objects.get(pk=student_id)
+            return models.StudentEnrollment.objects.filter(student=student).distinct()
 
 
 class CourseRatingAndReview(generics.ListCreateAPIView):

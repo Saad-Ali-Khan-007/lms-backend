@@ -95,8 +95,8 @@ class StudentEnrollmentSerializer(serializers.ModelSerializer):
 class ViewStudentEnrollmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.StudentEnrollment
-        fields = "__all__"
-        depth = 1
+        fields = ["id", "course", "student", "enrolled_time"]
+        depth = 2
 
 
 class CourseRatingAndReviewSerializer(serializers.ModelSerializer):
