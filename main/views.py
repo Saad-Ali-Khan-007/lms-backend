@@ -11,6 +11,7 @@ from .serializers import ViewStudentEnrollmentSerializer
 from .serializers import CourseRatingAndReviewSerializer
 from .serializers import TeacherDashboardSerializer
 from .serializers import StudentFavouriteCoursesSerializer
+from .serializers import StudentAssignmentSerializer
 from rest_framework import generics
 from django.http import JsonResponse
 from django.db.models import Q
@@ -266,3 +267,15 @@ def remove_favourite(request, student_id, course_id):
         return JsonResponse({"bool": True})
     else:
         return JsonResponse({"bool": False})
+
+
+class StudentAssignment(generics.ListCreateAPIView):
+    queryset = models.StudentAssignment.objects.all()
+    serializer_class = StudentAssignmentSerializer
+
+    def get_queryset(self):
+        student_id = self.kwargs["student_id"]
+        teacher_id = self.kwargs["teacher_id"]
+        student = models.Student.objects.get(pk=student_id)
+        teacher = models.Teacher.objects.get(pk=teacher_id)
+        return models.StudentAssignment.objects.filter(student=student, teacher=teacher)

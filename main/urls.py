@@ -65,7 +65,15 @@ urlpatterns = [
         "student-remove-favourite-course/<int:student_id>/<int:course_id>/",
         views.remove_favourite,
     ),
+    path(
+        "student-remove-favourite-course/<int:student_id>/<int:course_id>/",
+        views.remove_favourite,
+    ),
     # course rating and review
     path("course-rating-review/<int:course_id>", views.CourseRatingAndReview.as_view()),
     path("rating-status/<int:student_id>/<int:course_id>/", views.studentRatingStatus),
+    path(
+        "student-assignment/<int:student_id>/<int:teacher_id>/",
+        views.StudentAssignment.as_view(),
+    ),
 ]

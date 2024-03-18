@@ -158,3 +158,17 @@ class StudentFavouriteCourses(models.Model):
 
     class Meta:
         verbose_name_plural = "8. Student Favourite Courses"
+
+
+class StudentAssignment(models.Model):
+    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    title = models.CharField(max_length=200)
+    description = models.TextField(null=True)
+    add_time = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name_plural = "9. Student Assignment"
