@@ -45,6 +45,26 @@ urlpatterns = [
         "student-course/<int:student_id>/",
         views.SpecificCourseEnrolledStudent.as_view(),
     ),
+    path(
+        "student-recommended-course/<int:student_id>/",
+        views.ViewCourseList.as_view(),
+    ),
+    path(
+        "student-favourite-course/",
+        views.StudentFavouriteCourse.as_view(),
+    ),
+    path(
+        "specific-student-favourite-course/<int:student_id>/",
+        views.StudentFavouriteCourse.as_view(),
+    ),
+    path(
+        "student-favourite-course-status/<int:student_id>/<int:course_id>/",
+        views.favourite_status,
+    ),
+    path(
+        "student-remove-favourite-course/<int:student_id>/<int:course_id>/",
+        views.remove_favourite,
+    ),
     # course rating and review
     path("course-rating-review/<int:course_id>", views.CourseRatingAndReview.as_view()),
     path("rating-status/<int:student_id>/<int:course_id>/", views.studentRatingStatus),
