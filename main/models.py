@@ -108,7 +108,7 @@ class Chapter(models.Model):
 class Student(models.Model):
     full_name = models.CharField(max_length=50)
     email = models.CharField(max_length=50)
-    password = models.CharField(max_length=50)
+    password = models.CharField(max_length=50, null=True)
     profile_img = models.ImageField(upload_to="teacher_profile_imgs/", null=True)
     phone_no = models.CharField(max_length=11)
     qualification = models.CharField(max_length=50)

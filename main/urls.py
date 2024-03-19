@@ -24,6 +24,7 @@ urlpatterns = [
     path("teacher-course-detail/<int:pk>", views.TeacherCourseDetail.as_view()),
     # Student
     path("users/", views.UserList.as_view()),
+    path("user/<int:pk>", views.UserDetail.as_view()),
     path("user/login/", views.user_login),
     # Student enroll in course
     path("enroll-course/", views.StudentEnrollmentList.as_view()),
