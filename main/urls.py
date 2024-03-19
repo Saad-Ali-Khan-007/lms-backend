@@ -76,4 +76,12 @@ urlpatterns = [
         "student-assignment/<int:student_id>/<int:teacher_id>/",
         views.StudentAssignment.as_view(),
     ),
+    path(
+        "teacher-assigned-assignment/<int:student_id>/",
+        views.TeacherAssignment.as_view(),
+    ),
+    path(
+        "student-mark-assignment/<int:pk>/",
+        views.StudentAssignmentStatus.as_view(),
+    ),
 ]
