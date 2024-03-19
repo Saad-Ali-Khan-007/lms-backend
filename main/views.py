@@ -166,6 +166,20 @@ def user_login(request):
         return JsonResponse({"bool": False})
 
 
+@csrf_exempt
+def user_forgot_password(request, student_id):
+    password = request.POST["password"]
+    try:
+        studentData = models.Student.objects.get(id=student_id)
+    except models.Student.DoesNotExist:
+        studentData = None
+    if studentData:
+        models.Student.objects.filter(id=student_id).update(password=password)
+        return JsonResponse({"bool": True})
+    else:
+        return JsonResponse({"bool": False})
+
+
 class StudentEnrollmentList(generics.ListCreateAPIView):
     queryset = models.StudentEnrollment.objects.all()
     serializer_class = StudentEnrollmentSerializer
