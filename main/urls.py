@@ -42,6 +42,10 @@ urlpatterns = [
         views.SpecificCourseEnrolledStudent.as_view(),
     ),
     path(
+        "student-dashboard/<int:pk>/",
+        views.UserDashboard.as_view(),
+    ),
+    path(
         "student-course/<int:student_id>/",
         views.SpecificCourseEnrolledStudent.as_view(),
     ),

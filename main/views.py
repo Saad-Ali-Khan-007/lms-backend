@@ -12,6 +12,7 @@ from .serializers import CourseRatingAndReviewSerializer
 from .serializers import TeacherDashboardSerializer
 from .serializers import StudentFavouriteCoursesSerializer
 from .serializers import StudentAssignmentSerializer
+from .serializers import UserDashboardSerializer
 from rest_framework import generics
 from django.http import JsonResponse
 from django.db.models import Q
@@ -139,6 +140,11 @@ class ChapterDetail(generics.RetrieveUpdateDestroyAPIView):
 class UserList(generics.ListCreateAPIView):
     queryset = models.Student.objects.all()
     serializer_class = UserSerializer
+
+
+class UserDashboard(generics.RetrieveAPIView):
+    queryset = models.Student.objects.all()
+    serializer_class = UserDashboardSerializer
 
 
 @csrf_exempt

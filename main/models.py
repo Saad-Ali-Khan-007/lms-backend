@@ -109,10 +109,35 @@ class Student(models.Model):
     full_name = models.CharField(max_length=50)
     email = models.CharField(max_length=50)
     password = models.CharField(max_length=50)
+    profile_img = models.ImageField(upload_to="teacher_profile_imgs/", null=True)
     phone_no = models.CharField(max_length=11)
     qualification = models.CharField(max_length=50)
     address = models.TextField(max_length=250)
     interested_categories = models.TextField(max_length=250)
+
+    def student_enrolled_course_count(self):
+        student_enrolled_course_count = StudentEnrollment.objects.filter(
+            student=self
+        ).count()
+        return student_enrolled_course_count
+
+    def student_favourite_course_count(self):
+        student_favourite_course_count = StudentFavouriteCourses.objects.filter(
+            student=self
+        ).count()
+        return student_favourite_course_count
+
+    def student_completed_assignment_count(self):
+        student_completed_assignment_count = StudentAssignment.objects.filter(
+            student=self, student_status=True
+        ).count()
+        return student_completed_assignment_count
+
+    def student_pending_assignment_count(self):
+        student_pending_assignment_count = StudentAssignment.objects.filter(
+            student=self, student_status=False
+        ).count()
+        return student_pending_assignment_count
 
     class Meta:
         verbose_name_plural = "5. Students"

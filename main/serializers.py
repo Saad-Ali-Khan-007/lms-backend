@@ -86,6 +86,21 @@ class UserSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
+class UserDashboardSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Student
+        fields = [
+            "id",
+            "full_name",
+            "qualification",
+            "profile_img",
+            "student_enrolled_course_count",
+            "student_favourite_course_count",
+            "student_completed_assignment_count",
+            "student_pending_assignment_count",
+        ]
+
+
 class StudentEnrollmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.StudentEnrollment
