@@ -15,6 +15,7 @@ from .serializers import StudentAssignmentSerializer
 from .serializers import UserDashboardSerializer
 from .serializers import NotificationSerializer
 from .serializers import QuizSerializer
+from .serializers import QuizQuestionSerializer
 from rest_framework import generics
 from django.http import JsonResponse
 from django.db.models import Q
@@ -361,3 +362,22 @@ class QuizList(generics.ListCreateAPIView):
 class TeacherQuizDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = models.Quiz.objects.all()
     serializer_class = QuizSerializer
+
+
+class QuizQuestionList(generics.ListCreateAPIView):
+    queryset = models.QuizQuestions.objects.all()
+    serializer_class = QuizQuestionSerializer
+
+
+class CourseQuizQuestionList(generics.ListAPIView):
+    serializer_class = QuizQuestionSerializer
+
+    def get_queryset(self):
+        quiz_id = self.kwargs["quiz_id"]
+        quiz = models.Quiz.objects.get(pk=quiz_id)
+        return models.QuizQuestions.objects.filter(quiz=quiz)
+
+
+class CourseQuizQuestionDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = models.QuizQuestions.objects.all()
+    serializer_class = QuizQuestionSerializer
