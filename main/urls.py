@@ -43,6 +43,7 @@ urlpatterns = [
         "teacher-all-student/<int:teacher_id>/",
         views.SpecificCourseEnrolledStudent.as_view(),
     ),
+    # Student
     path(
         "student-dashboard/<int:pk>/",
         views.UserDashboard.as_view(),
@@ -94,4 +95,12 @@ urlpatterns = [
         "student/notification/<int:student_id>/",
         views.NotificationList.as_view(),
     ),
+    path(
+        "student/notification/<int:student_id>/",
+        views.NotificationList.as_view(),
+    ),
+    # Quiz
+    path("quiz/", views.QuizList.as_view()),
+    path("quiz/<int:teacher_id>/", views.QuizList.as_view()),
+    path("teacher-quiz-detail/<int:pk>", views.TeacherQuizDetail.as_view()),
 ]

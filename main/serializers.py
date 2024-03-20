@@ -157,3 +157,16 @@ class NotificationSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Notification
         fields = "__all__"
+
+
+class QuizSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Quiz
+        fields = "__all__"
+
+    def __init__(self, *args, **kwargs):
+        super(QuizSerializer, self).__init__(*args, **kwargs)
+        request = self.context.get("request")
+        self.Meta.depth = 0
+        if request and request.method == "GET":
+            self.Meta.depth = 1
