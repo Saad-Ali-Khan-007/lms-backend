@@ -90,4 +90,8 @@ urlpatterns = [
         "student-mark-assignment/<int:pk>/",
         views.StudentAssignmentStatus.as_view(),
     ),
+    path(
+        "student/notification/<int:student_id>/",
+        views.NotificationList.as_view(),
+    ),
 ]

@@ -12,3 +12,14 @@ admin.site.register(models.StudentEnrollment)
 admin.site.register(models.Rating_Review)
 admin.site.register(models.StudentFavouriteCourses)
 admin.site.register(models.StudentAssignment)
+
+
+class NotificationAdmin(admin.ModelAdmin):
+    list_display = [
+        "notification_subject",
+        "notification_for",
+        "notification_read_status",
+    ]
+
+
+admin.site.register(models.Notification, NotificationAdmin)

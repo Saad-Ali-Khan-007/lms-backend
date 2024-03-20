@@ -198,3 +198,15 @@ class StudentAssignment(models.Model):
 
     class Meta:
         verbose_name_plural = "9. Student Assignment"
+
+
+class Notification(models.Model):
+    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, null=True)
+    student = models.ForeignKey(Student, on_delete=models.CASCADE, null=True)
+    notification_subject = models.CharField(max_length=200, null=True)
+    notification_for = models.CharField(max_length=200)
+    notification_created_time = models.DateTimeField(auto_now_add=True)
+    notification_read_status = models.BooleanField(default=False)
+
+    class Meta:
+        verbose_name_plural = "10. Notification"

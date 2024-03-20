@@ -13,6 +13,7 @@ from .serializers import TeacherDashboardSerializer
 from .serializers import StudentFavouriteCoursesSerializer
 from .serializers import StudentAssignmentSerializer
 from .serializers import UserDashboardSerializer
+from .serializers import NotificationSerializer
 from rest_framework import generics
 from django.http import JsonResponse
 from django.db.models import Q
@@ -315,9 +316,32 @@ class TeacherAssignment(generics.ListCreateAPIView):
 
         student = models.Student.objects.get(pk=student_id)
 
+        models.Notification.objects.filter(
+            student=student,
+            notification_subject="assignment",
+            notification_for="student",
+        ).update(
+            notification_read_status=True,
+        )
+
         return models.StudentAssignment.objects.filter(student=student)
 
 
 class StudentAssignmentStatus(generics.RetrieveUpdateDestroyAPIView):
     queryset = models.StudentAssignment.objects.all()
     serializer_class = StudentAssignmentSerializer
+
+
+class NotificationList(generics.ListCreateAPIView):
+    queryset = models.Notification.objects.all()
+    serializer_class = NotificationSerializer
+
+    def get_queryset(self):
+        student_id = self.kwargs["student_id"]
+        student = models.Student.objects.get(pk=student_id)
+        return models.Notification.objects.filter(
+            student=student,
+            notification_subject="assignment",
+            notification_for="student",
+            notification_read_status=False,
+        )
