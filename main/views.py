@@ -387,3 +387,9 @@ class CourseQuizQuestionDetail(generics.RetrieveUpdateDestroyAPIView):
 class CourseQuizList(generics.ListCreateAPIView):
     queryset = models.CourseQuiz.objects.all()
     serializer_class = CourseQuizSerializer
+
+    def get_queryset(self):
+        if "course_id" in self.kwargs:
+            course_id = self.kwargs["course_id"]
+            course = models.Course.objects.get(pk=course_id)
+            return models.CourseQuiz.objects.filter(course=course)

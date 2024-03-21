@@ -111,5 +111,6 @@ urlpatterns = [
     ),
     # Quiz assigned to course
     path("assign-quiz-course/", views.CourseQuizList.as_view()),
-    # Quiz assign Status
+    # Specific Course Quiz
+    path("course-quiz/<int:course_id>", views.CourseQuizList.as_view()),
 ]
