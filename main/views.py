@@ -16,6 +16,7 @@ from .serializers import UserDashboardSerializer
 from .serializers import NotificationSerializer
 from .serializers import QuizSerializer
 from .serializers import QuizQuestionSerializer
+from .serializers import CourseQuizSerializer
 from rest_framework import generics
 from django.http import JsonResponse
 from django.db.models import Q
@@ -381,3 +382,8 @@ class CourseQuizQuestionList(generics.ListAPIView):
 class CourseQuizQuestionDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = models.QuizQuestions.objects.all()
     serializer_class = QuizQuestionSerializer
+
+
+class CourseQuizList(generics.ListCreateAPIView):
+    queryset = models.CourseQuiz.objects.all()
+    serializer_class = CourseQuizSerializer

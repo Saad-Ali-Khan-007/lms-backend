@@ -218,6 +218,9 @@ class Quiz(models.Model):
     detail = models.TextField()
     add_time = models.DateTimeField(auto_now_add=True)
 
+    def assign_status(self):
+        return CourseQuiz.objects.filter(quiz=self).count()
+
     def __str__(self):
         return self.title
 

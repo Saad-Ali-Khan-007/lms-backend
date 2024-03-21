@@ -109,4 +109,7 @@ urlpatterns = [
         "course-quiz-question-detail/<int:pk>",
         views.CourseQuizQuestionDetail.as_view(),
     ),
+    # Quiz assigned to course
+    path("assign-quiz-course/", views.CourseQuizList.as_view()),
+    # Quiz assign Status
 ]
