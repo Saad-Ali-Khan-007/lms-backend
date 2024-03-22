@@ -196,3 +196,16 @@ class CourseQuizSerializer(serializers.ModelSerializer):
         self.Meta.depth = 0
         if request and request.method == "GET":
             self.Meta.depth = 2
+
+
+class AttemptQuizSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.AttemptQuiz
+        fields = "__all__"
+
+    def __init__(self, *args, **kwargs):
+        super(AttemptQuizSerializer, self).__init__(*args, **kwargs)
+        request = self.context.get("request")
+        self.Meta.depth = 0
+        if request and request.method == "GET":
+            self.Meta.depth = 2
