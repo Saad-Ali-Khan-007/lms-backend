@@ -18,6 +18,7 @@ from .serializers import QuizSerializer
 from .serializers import QuizQuestionSerializer
 from .serializers import CourseQuizSerializer
 from .serializers import AttemptQuizSerializer
+from .serializers import StudyMaterialSerializer
 from rest_framework import generics
 from django.http import JsonResponse
 from django.db.models import Q
@@ -425,3 +426,22 @@ def fetch_quiz_attempt_status(request, quiz_id, student_id):
         return JsonResponse({"bool": True})
     else:
         return JsonResponse({"bool": False})
+
+
+class StudyMaterialList(generics.ListCreateAPIView):
+    queryset = models.StudyMaterial.objects.all()
+    serializer_class = StudyMaterialSerializer
+
+
+class StudyMaterialDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = models.StudyMaterial.objects.all()
+    serializer_class = StudyMaterialSerializer
+
+
+class CourseStudyMaterialList(generics.ListAPIView):
+    serializer_class = StudyMaterialSerializer
+
+    def get_queryset(self):
+        course_id = self.kwargs["course_id"]
+        course = models.Course.objects.get(pk=course_id)
+        return models.StudyMaterial.objects.filter(course=course)

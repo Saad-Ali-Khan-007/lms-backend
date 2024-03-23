@@ -127,4 +127,9 @@ urlpatterns = [
         "fetch-quiz-attempt-status/<int:quiz_id>/<int:student_id>",
         views.fetch_quiz_attempt_status,
     ),
+    # study material
+    path("study-material/", views.StudyMaterialList.as_view()),
+    path("study-material-detail/<int:pk>", views.StudyMaterialDetail.as_view()),
+    # study material a/c to courses
+    path("study-material/<int:course_id>", views.CourseStudyMaterialList.as_view()),
 ]

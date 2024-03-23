@@ -98,6 +98,35 @@ class Chapter(models.Model):
     video = models.FileField(upload_to="chapter_videos/", null=True)
     remarks = models.TextField(null=True)
 
+    # def chapter_duration(self):
+    #     seconds = 0
+    #     import cv2
+
+    #     cap = cv2.VideoCapture(self.video.path)
+    #     fps = cap.get(cv2.CAP_PROP_FPS)
+    #     frame_count = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+    #     if frame_count:
+    #         duration = frame_count / fps
+    #         print("fps = " + str(fps))
+    #         print("number of frames = " + str(frame_count))
+    #         print("duration (s) = " + str(duration))
+    #         minutes = int(duration / 60)
+    #         seconds = duration % 60
+    #         print("duration (M:S) = " + str(minutes) + ":" + str(seconds))
+    #     return seconds
+    def chapter_duration(self):
+        from pymediainfo import MediaInfo
+
+        media_info = MediaInfo.parse(self.video)
+        # duration in milliseconds
+        duration_in_ms = media_info.tracks[0].duration
+        if duration_in_ms / 3600 > 60:
+            hours = round((duration_in_ms / 3600000), 2)
+            return str(hours) + " hour"
+        else:
+            sec = round(duration_in_ms / 1000, 2)
+            return str(sec) + " sec"
+
     class Meta:
         verbose_name_plural = "4. Chapter"
 
@@ -259,3 +288,17 @@ class AttemptQuiz(models.Model):
 
     class Meta:
         verbose_name_plural = "14. Attempted Questions"
+
+
+class StudyMaterial(models.Model):
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    title = models.CharField(max_length=50)
+    description = models.TextField(null=True)
+    study_material = models.FileField(upload_to="study_material/", null=True)
+    remarks = models.TextField(null=True)
+
+    class Meta:
+        verbose_name_plural = "15. Study Material"
+
+    def __str__(self):
+        return self.title

@@ -77,7 +77,15 @@ class CourseSerializer(serializers.ModelSerializer):
 class ChapterSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Chapter
-        fields = "__all__"
+        fields = [
+            "id",
+            "course",
+            "title",
+            "description",
+            "video",
+            "remarks",
+            "chapter_duration",
+        ]
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -209,3 +217,9 @@ class AttemptQuizSerializer(serializers.ModelSerializer):
         self.Meta.depth = 0
         if request and request.method == "GET":
             self.Meta.depth = 2
+
+
+class StudyMaterialSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.StudyMaterial
+        fields = "__all__"
