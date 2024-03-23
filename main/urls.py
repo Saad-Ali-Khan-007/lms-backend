@@ -13,6 +13,7 @@ urlpatterns = [
     # course
     path("add-course/", views.CourseList.as_view()),
     path("course/", views.ViewCourseList.as_view()),
+    path("search-course/<str:search>", views.ViewCourseList.as_view()),
     path("course/<int:pk>", views.CourseDetail.as_view()),
     # chapter
     path("chapter/", views.ChapterList.as_view()),
@@ -121,5 +122,9 @@ urlpatterns = [
     path(
         "course-quiz-question/next-question/<int:quiz_id>/<int:question_id>",
         views.CourseQuizQuestionList.as_view(),
+    ),
+    path(
+        "fetch-quiz-attempt-status/<int:quiz_id>/<int:student_id>",
+        views.fetch_quiz_attempt_status,
     ),
 ]

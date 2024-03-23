@@ -82,12 +82,16 @@ class ViewCourseList(generics.ListAPIView):
                 techs__icontains=skill_name, teachers_category=teacher
             )
 
-        elif "student_id" in self.kwargs:
+        if "search" in self.kwargs:
+            search = self.kwargs["search"]
+            qs = models.Course.objects.filter(Q(title__icontains=search))
+
+        if "student_id" in self.kwargs:
             student_id = self.kwargs["student_id"]
             student = models.Student.objects.get(pk=student_id)
 
             queries = [
-                Q(techs__iendswith=value) for value in student.interested_categories
+                Q(techs__icontains=value) for value in student.interested_categories
             ]
 
             query = queries.pop()
@@ -408,3 +412,16 @@ class CourseQuizList(generics.ListCreateAPIView):
 class AttemptQuizList(generics.ListCreateAPIView):
     queryset = models.AttemptQuiz.objects.all()
     serializer_class = AttemptQuizSerializer
+
+
+def fetch_quiz_attempt_status(request, quiz_id, student_id):
+    quiz = models.Quiz.objects.filter(id=quiz_id).first()
+    student = models.Student.objects.filter(id=student_id).first()
+    attemptStatus = models.AttemptQuiz.objects.filter(
+        student=student, question__quiz=quiz
+    ).count()
+
+    if attemptStatus:
+        return JsonResponse({"bool": True})
+    else:
+        return JsonResponse({"bool": False})
