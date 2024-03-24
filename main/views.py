@@ -22,6 +22,7 @@ from .serializers import StudyMaterialSerializer
 from rest_framework import generics
 from django.http import JsonResponse
 from django.db.models import Q
+from django.db.models import Avg
 from django.views.decorators.csrf import csrf_exempt
 
 
@@ -234,12 +235,31 @@ class SpecificCourseEnrolledStudent(generics.ListAPIView):
 
 
 class CourseRatingAndReview(generics.ListCreateAPIView):
+    queryset = models.Rating_Review
     serializer_class = CourseRatingAndReviewSerializer
 
     def get_queryset(self):
-        course_id = self.kwargs["course_id"]
-        course = models.Course.objects.get(pk=course_id)
-        return models.Rating_Review.objects.filter(course=course)
+        if "course_id" in self.request.GET:
+            course_id = self.kwargs["course_id"]
+            course = models.Course.objects.get(pk=course_id)
+            return models.Rating_Review.objects.filter(course=course)
+
+        elif "popular" in self.request.GET:
+            # sql = "SELECT *,AVG(cr.rating) as avg_course_rating FROM main_courserating as cr INNER JOIN main_course as c ON cr.course_id=c.id GROUP BY c.id ORDER BY avg_rating desc LIMIT 4"
+            # return models.Rating_Review.objects.raw(sql)
+
+            queryset = models.Course.objects.annotate(
+                avg_course_rating=Avg("rating_review")
+            ).order_by("-avg_course_rating")[:4]
+            return queryset
+        elif "all" in self.request.GET:
+            # sql = "SELECT *,AVG(cr.rating) as avg_course_rating FROM main_courserating as cr INNER JOIN main_course as c ON cr.course_id=c.id GROUP BY c.id ORDER BY avg_rating desc"
+            # return models.Rating_Review.objects.raw(sql)
+
+            queryset = models.Course.objects.annotate(
+                avg_course_rating=Avg("rating_review__rating")
+            ).order_by("-avg_course_rating")
+            return queryset
 
 
 def studentRatingStatus(request, student_id, course_id):

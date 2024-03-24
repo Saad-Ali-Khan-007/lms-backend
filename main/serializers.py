@@ -125,14 +125,14 @@ class ViewStudentEnrollmentSerializer(serializers.ModelSerializer):
 class CourseRatingAndReviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Rating_Review
-        fields = "__all__"
+        fields = ["id", "course", "student", "rating", "reviews", "review_time"]
 
     def __init__(self, *args, **kwargs):
         super(CourseRatingAndReviewSerializer, self).__init__(*args, **kwargs)
         request = self.context.get("request")
         self.Meta.depth = 0
         if request and request.method == "GET":
-            self.Meta.depth = 1
+            self.Meta.depth = 2
 
 
 class StudentFavouriteCoursesSerializer(serializers.ModelSerializer):

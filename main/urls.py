@@ -79,6 +79,7 @@ urlpatterns = [
     ),
     # course rating and review
     path("course-rating-review/<int:course_id>", views.CourseRatingAndReview.as_view()),
+    path("popular-courses/", views.CourseRatingAndReview.as_view()),
     path("rating-status/<int:student_id>/<int:course_id>/", views.studentRatingStatus),
     path(
         "student-assignment/<int:student_id>/<int:teacher_id>/",
