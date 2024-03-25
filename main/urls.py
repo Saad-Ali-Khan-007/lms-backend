@@ -5,6 +5,7 @@ urlpatterns = [
     # teacher
     path("teachers/", views.TeacherList.as_view()),
     path("teachers/<int:pk>/", views.TeacherDetail.as_view()),
+    path("popular-teachers/", views.TeacherList.as_view()),
     path("teacher-forgot-password/<int:teacher_id>/", views.teacher_forgot_password),
     path("teacher-dashboard/<int:pk>/", views.TeacherDashboard.as_view()),
     path("teachers/login/", views.teacher_login),

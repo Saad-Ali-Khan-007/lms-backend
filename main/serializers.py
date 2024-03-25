@@ -16,6 +16,7 @@ class TeacherSerializer(serializers.ModelSerializer):
             "qualification",
             "skills",
             "teacher_courses",
+            "teacher_total_course_count",
             "skill_list",
         ]
         depth = 1

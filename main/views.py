@@ -22,7 +22,7 @@ from .serializers import StudyMaterialSerializer
 from rest_framework import generics
 from django.http import JsonResponse
 from django.db.models import Q
-from django.db.models import Avg
+from django.db.models import Avg, Count
 from django.views.decorators.csrf import csrf_exempt
 
 
@@ -30,6 +30,24 @@ class TeacherList(generics.ListCreateAPIView):
     queryset = models.Teacher.objects.all()
     serializer_class = TeacherSerializer
     # permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        if "popular" in self.request.GET:
+            # sql = "SELECT *,COUNT(c.id) as total_course FROM main_teacher as t INNER JOIN main_course as c ON c.teacher_id=t.id GROUP BY t.id ORDER BY total_course desc"
+            # return models.Rating_Review.objects.raw(sql)
+
+            queryset = models.Teacher.objects.annotate(
+                course_count=Count("teacher_courses")
+            ).order_by("-course_count")[:4]
+            return queryset
+        if "all" in self.request.GET:
+            # sql = "SELECT *,COUNT(c.id) as total_course FROM main_teacher as t INNER JOIN main_course as c ON c.teacher_id=t.id GROUP BY t.id ORDER BY total_course desc"
+            # return models.Rating_Review.objects.raw(sql)
+
+            queryset = models.Teacher.objects.annotate(
+                course_count=Count("teacher_courses")
+            ).order_by("-course_count")
+            return queryset
 
 
 class TeacherDetail(generics.RetrieveUpdateDestroyAPIView):
@@ -249,7 +267,7 @@ class CourseRatingAndReview(generics.ListCreateAPIView):
             # return models.Rating_Review.objects.raw(sql)
 
             queryset = models.Course.objects.annotate(
-                avg_course_rating=Avg("rating_review")
+                avg_course_rating=Avg("rating_review__rating")
             ).order_by("-avg_course_rating")[:4]
             return queryset
         elif "all" in self.request.GET:
