@@ -56,6 +56,7 @@ class ViewCourseSerializer(serializers.ModelSerializer):
             "tech_list",
             "total_enrolled_students",
             "average_course_rating",
+            "course_views",
         ]
         depth = 1
 

@@ -465,3 +465,10 @@ class CourseStudyMaterialList(generics.ListAPIView):
         course_id = self.kwargs["course_id"]
         course = models.Course.objects.get(pk=course_id)
         return models.StudyMaterial.objects.filter(course=course)
+
+
+def course_views(request, course_id):
+    queryset = models.Course.objects.filter(pk=course_id).first()
+    queryset.course_views += 1
+    queryset.save()
+    return JsonResponse({"views": queryset.course_views})

@@ -63,6 +63,7 @@ class Course(models.Model):
     description = models.TextField(null=True)
     featured_img = models.ImageField(upload_to="course_imgs/", null=True)
     techs = models.TextField(null=True)
+    course_views = models.BigIntegerField(default=0)
 
     def related_courses(self):
         related_courses = Course.objects.filter(techs=self.techs).exclude(id=self.id)
