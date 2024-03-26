@@ -47,6 +47,10 @@ urlpatterns = [
     ),
     # Student
     path(
+        "student-reviews/",
+        views.CourseRatingAndReview.as_view(),
+    ),
+    path(
         "student-dashboard/<int:pk>/",
         views.UserDashboard.as_view(),
     ),

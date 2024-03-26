@@ -278,6 +278,9 @@ class CourseRatingAndReview(generics.ListCreateAPIView):
                 avg_course_rating=Avg("rating_review__rating")
             ).order_by("-avg_course_rating")
             return queryset
+        return models.Rating_Review.objects.filter(course__isnull=False).order_by(
+            "-rating"
+        )
 
 
 def studentRatingStatus(request, student_id, course_id):
